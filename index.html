@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Very Serious Study</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ffd1dc, #ffe6f0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .box {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 420px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    h1 { font-size: 22px; margin: 0 0 10px; }
+    p { color: #555; margin: 10px 0; line-height: 1.35; }
+
+    button {
+      margin: 8px 0;
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background: #ff5c8a;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box" id="content">
+    <h1>Important announcement.</h1>
+    <p>
+      This will take exactly 15 seconds<br>
+      and absolutely no life-changing decisions.
+    </p>
+    <p>Proceed at your own risk.</p>
+    <button onclick="q1()">I accept responsibility →</button>
+  </div>
+
+  <script>
+    function q1() {
+      document.getElementById("content").innerHTML = `
+        <h1>First question.</h1>
+        <p>Please don’t overthink it.<br>(Everyone overthinks it.)</p>
+
+        <button onclick="q2()">🍿 Staying in with a good movie</button>
+        <button onclick="q2()">🌮 Going out “just to eat”</button>
+        <button onclick="q2()">🚗 Random drives, no destination</button>
+        <button onclick="q2()">🛌 Cancelling plans, zero regret</button>
+      `;
+    }
+
+    function q2() {
+      document.getElementById("content").innerHTML = `
+        <h1>Noted.</h1>
+        <p>Second question.</p>
+        <p>How would people describe your vibe?</p>
+
+        <button onclick="q3()">😄 Sarcastic but harmless</button>
+        <button onclick="q3()">🧠 Quietly judging everything</button>
+        <button onclick="q3()">🔥 Slightly chaotic (fun version)</button>
+        <button onclick="q3()">😴 I'll reply later energy</button>
+      `;
+    }
+
+    function q3() {
+      document.getElementById("content").innerHTML = `
+        <h1>One more.</h1>
+        <p>Important question.<br>Pick your comfort choice:</p>
+
+        <button onclick="q4()">🍝 Italian / pasta forever</button>
+        <button onclick="q4()">🌮 Mexican or street food</button>
+        <button onclick="q4()">🍜 Asian food (ramen, dumplings, etc.)</button>
+        <button onclick="q4()">🍕 Anything as long as it tastes good</button>
+      `;
+    }
+
+    function q4() {
+      document.getElementById("content").innerHTML = `
+        <h1>One more.</h1>
+        <p>If you could book a trip right now:</p>
+
+        <button onclick="q5()">🏖 Somewhere with a beach</button>
+        <button onclick="q5()">🏔 Mountains & quiet views</button>
+        <button onclick="q5()">🏙 Exploring a new city</button>
+        <button onclick="q5()">🧳 Anywhere, just not home</button>
+      `;
+    }
+
+    function q5() {
+      document.getElementById("content").innerHTML = `
+        <h1>Final question.</h1>
+        <p>
+          When someone puts unnecessary effort into<br>
+          something like this, your first thought is:
+        </p>
+
+        <button onclick="final()">Okay, that’s kinda funny</button>
+        <button onclick="final()">Extra, but I respect it</button>
+        <button onclick="final()">I rolled my eyes, then smiled</button>
+        <button onclick="final()">I’m judging… but not mad</button>
+      `;
+    }
+
+    function final() {
+      document.getElementById("content").innerHTML = `
+        <h1>Fair enough.</h1>
+        <p>No trick.<br>No follow-up question.<br>No proposal. Relax.</p>
+
+        <p>
+          Just wanted to confirm —<br>
+          you seem like someone who’d be fun to talk to.
+        </p>
+
+        <p style="font-size:14px; color:#777;">
+          Thanks for participating in this very serious study.
+        </p>
+      `;
+    }
+  </script>
+</body>
+</html>
