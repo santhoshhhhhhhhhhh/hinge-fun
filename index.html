@@ -2,137 +2,450 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Very Serious Study</title>
 
   <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #ffd1dc, #ffe6f0);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
+    :root{
+      --bg1:#ff4d8d;
+      --bg2:#ffb3d1;
+      --bg3:#7c4dff;
+      --card: rgba(255,255,255,.78);
+      --cardBorder: rgba(255,255,255,.35);
+      --text:#1d1d1f;
+      --muted:#5a5a66;
+      --btn:#ff2e79;
+      --btn2:#7c4dff;
+      --shadow: 0 20px 60px rgba(0,0,0,.18);
     }
 
-    .box {
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      width: 90%;
-      max-width: 420px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--text);
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:
+        radial-gradient(1200px 600px at 15% 20%, rgba(255,255,255,.25), transparent 60%),
+        radial-gradient(900px 500px at 85% 75%, rgba(255,255,255,.18), transparent 55%),
+        linear-gradient(120deg, var(--bg1), var(--bg2), var(--bg3));
+      background-size: 200% 200%;
+      animation: bgShift 10s ease-in-out infinite;
+      padding: 18px;
+    }
+    @keyframes bgShift{
+      0%{ background-position: 0% 50%; }
+      50%{ background-position: 100% 50%; }
+      100%{ background-position: 0% 50%; }
     }
 
-    h1 { font-size: 22px; margin: 0 0 10px; }
-    p { color: #555; margin: 10px 0; line-height: 1.35; }
+    /* floating blobs */
+    .blob{
+      position:absolute;
+      filter: blur(20px);
+      opacity:.45;
+      border-radius: 999px;
+      z-index:0;
+      mix-blend-mode: screen;
+      animation: floaty 10s ease-in-out infinite;
+    }
+    .b1{ width:260px; height:260px; left:-60px; top:40px; background:#fff; animation-duration: 11s; }
+    .b2{ width:220px; height:220px; right:-80px; top:120px; background:#ffd6e7; animation-duration: 13s; }
+    .b3{ width:280px; height:280px; right:20px; bottom:-120px; background:#cbb6ff; animation-duration: 15s; }
+    @keyframes floaty{
+      0%,100%{ transform: translate(0,0) scale(1); }
+      50%{ transform: translate(18px,-14px) scale(1.05); }
+    }
 
-    button {
+    .wrap{
+      position:relative;
+      width:100%;
+      max-width: 430px;
+      z-index:1;
+    }
+
+    .card{
+      width:100%;
+      background: var(--card);
+      border: 1px solid var(--cardBorder);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      padding: 22px 18px 16px;
+      transform: translateY(0);
+      animation: popIn .45s ease-out;
+    }
+    @keyframes popIn{
+      from{ opacity:0; transform: translateY(14px) scale(.985); }
+      to{ opacity:1; transform: translateY(0) scale(1); }
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom: 10px;
+      gap:10px;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(255,255,255,.35);
+      font-weight: 700;
+      font-size: 12px;
+      color: rgba(20,20,25,.82);
+    }
+    .dots{
+      display:flex; gap:6px; align-items:center;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(255,255,255,.35);
+    }
+    .dot{
+      width:8px; height:8px; border-radius:999px;
+      background: rgba(30,30,40,.25);
+    }
+    .dot.on{ background: rgba(30,30,40,.85); }
+
+    h1{
+      margin: 6px 0 6px;
+      font-size: 22px;
+      line-height: 1.15;
+      letter-spacing: -0.2px;
+    }
+    p{
       margin: 8px 0;
-      width: 100%;
+      color: var(--muted);
+      font-size: 14.5px;
+      line-height: 1.35;
+    }
+    .sub{
+      margin-top: 2px;
+      font-size: 13px;
+      color: rgba(60,60,70,.65);
+    }
+
+    .btns{
+      margin-top: 14px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    button{
+      width:100%;
+      border: 0;
+      border-radius: 14px;
       padding: 12px 14px;
-      font-size: 16px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      background: #ff5c8a;
+      font-size: 15.5px;
+      font-weight: 800;
+      cursor:pointer;
+      transition: transform .08s ease, filter .18s ease, box-shadow .18s ease;
       color: white;
+      background: linear-gradient(135deg, var(--btn), #ff6aa0);
+      box-shadow: 0 10px 22px rgba(255, 46, 121, .25);
+    }
+    button:hover{ filter: brightness(1.03); box-shadow: 0 12px 26px rgba(255, 46, 121, .32); }
+    button:active{ transform: translateY(1px) scale(.99); }
+
+    .btnAlt{
+      background: linear-gradient(135deg, var(--btn2), #a78bfa);
+      box-shadow: 0 10px 22px rgba(124, 77, 255, .22);
+    }
+    .btnAlt:hover{ box-shadow: 0 12px 26px rgba(124, 77, 255, .30); }
+
+    .footer{
+      margin-top: 14px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255,255,255,.35);
+      color: rgba(55,55,65,.65);
+      font-size: 12px;
+    }
+    .tiny{
+      opacity:.9;
+      font-weight: 700;
+    }
+    a{
+      color: rgba(35,35,45,.85);
+      text-decoration: none;
+      font-weight: 800;
+    }
+    a:hover{ text-decoration: underline; }
+
+    /* confetti */
+    .confetti{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+      border-radius: 18px;
+    }
+    .confetti i{
+      position:absolute;
+      width:10px; height:14px;
+      border-radius: 3px;
+      top:-20px;
+      opacity: .95;
+      animation: fall 1.25s ease-in forwards;
+      transform: rotate(10deg);
+    }
+    @keyframes fall{
+      to{
+        top: 110%;
+        transform: translateY(0) rotate(250deg);
+        opacity: 1;
+      }
+    }
+
+    /* result list */
+    .results{
+      text-align:left;
+      margin-top: 10px;
+      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 14px;
+      padding: 12px;
+      color: rgba(35,35,45,.9);
+      font-size: 13.5px;
+      line-height: 1.35;
+    }
+    .results b{ color: rgba(25,25,35,.95); }
+    .results .item{ margin: 6px 0; }
+
+    /* subtle slide transition */
+    .slideOut{ animation: slideOut .16s ease-in forwards; }
+    @keyframes slideOut{
+      to{ opacity:0; transform: translateY(10px) scale(.99); }
     }
   </style>
 </head>
 
 <body>
-  <div class="box" id="content">
-    <h1>Important announcement.</h1>
-    <p>
-      This will take exactly 15 seconds<br>
-      and absolutely no life-changing decisions.
-    </p>
-    <p>Proceed at your own risk.</p>
-    <button onclick="q1()">I accept responsibility →</button>
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+
+  <div class="wrap">
+    <div class="card" id="card">
+      <div class="confetti" id="confetti"></div>
+
+      <div class="topbar">
+        <div class="chip">🧪 Very Serious Study</div>
+        <div class="dots" id="dots">
+          <span class="dot on"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+
+      <div id="content">
+        <h1>Important announcement.</h1>
+        <p>This will take <b>exactly 15 seconds</b> and includes <b>zero life-changing decisions</b>.</p>
+        <p class="sub">Proceed at your own risk. I’m not liable for smiling.</p>
+
+        <div class="btns">
+          <button class="btnAlt" onclick="q1()">I accept responsibility →</button>
+        </div>
+
+        <div class="footer">
+          <span class="tiny">Level: mildly sarcastic</span>
+          <span>v1.0</span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
-    function q1() {
-      document.getElementById("content").innerHTML = `
+    let step = 0;
+    let answers = [];
+
+    const dotCount = 6; // intro + 5 questions
+    function setDots(n){
+      const dots = document.querySelectorAll("#dots .dot");
+      dots.forEach((d,i)=> d.classList.toggle("on", i <= n));
+    }
+
+    function transitionTo(html){
+      const card = document.getElementById("card");
+      const content = document.getElementById("content");
+      card.classList.add("slideOut");
+      setTimeout(()=>{
+        content.innerHTML = html;
+        card.classList.remove("slideOut");
+      }, 170);
+    }
+
+    function record(label, nextFn){
+      answers.push(label);
+      nextFn();
+    }
+
+    function q1(){
+      step = 1; setDots(step);
+      transitionTo(`
         <h1>First question.</h1>
-        <p>Please don’t overthink it.<br>(Everyone overthinks it.)</p>
-
-        <button onclick="q2()">🍿 Staying in with a good movie</button>
-        <button onclick="q2()">🌮 Going out “just to eat”</button>
-        <button onclick="q2()">🚗 Random drives, no destination</button>
-        <button onclick="q2()">🛌 Cancelling plans, zero regret</button>
-      `;
+        <p>Please don’t overthink it. <br><span class="sub">(Everyone overthinks it.)</span></p>
+        <div class="btns">
+          <button onclick="record('🍿 Staying in (movie night)', q2)">🍿 Staying in with a good movie</button>
+          <button onclick="record('🌮 Going out “just to eat”', q2)">🌮 Going out “just to eat”</button>
+          <button onclick="record('🚗 Random drives (no destination)', q2)">🚗 Random drives, no destination</button>
+          <button onclick="record('🛌 Cancel plans (zero regret)', q2)">🛌 Cancelling plans, zero regret</button>
+        </div>
+        <div class="footer">
+          <span class="tiny">Pick one. No speeches.</span>
+          <span>1/5</span>
+        </div>
+      `);
     }
 
-    function q2() {
-      document.getElementById("content").innerHTML = `
+    function q2(){
+      step = 2; setDots(step);
+      transitionTo(`
         <h1>Noted.</h1>
-        <p>Second question.</p>
-        <p>How would people describe your vibe?</p>
-
-        <button onclick="q3()">😄 Sarcastic but harmless</button>
-        <button onclick="q3()">🧠 Quietly judging everything</button>
-        <button onclick="q3()">🔥 Slightly chaotic (fun version)</button>
-        <button onclick="q3()">😴 I'll reply later energy</button>
-      `;
+        <p>Second question: <b>your vibe</b> in one button.</p>
+        <div class="btns">
+          <button class="btnAlt" onclick="record('😄 Sarcastic but harmless', q3)">😄 Sarcastic but harmless</button>
+          <button onclick="record('🧠 Quietly judging everything', q3)">🧠 Quietly judging everything</button>
+          <button onclick="record('🔥 Slightly chaotic (fun version)', q3)">🔥 Slightly chaotic (fun version)</button>
+          <button onclick="record('😴 I’ll reply later energy', q3)">😴 I’ll reply later energy</button>
+        </div>
+        <div class="footer">
+          <span class="tiny">I’m collecting data for science.</span>
+          <span>2/5</span>
+        </div>
+      `);
     }
 
-    function q3() {
-      document.getElementById("content").innerHTML = `
+    function q3(){
+      step = 3; setDots(step);
+      transitionTo(`
         <h1>One more.</h1>
-        <p>Important question.<br>Pick your comfort choice:</p>
-
-        <button onclick="q4()">🍝 Italian / pasta forever</button>
-        <button onclick="q4()">🌮 Mexican or street food</button>
-        <button onclick="q4()">🍜 Asian food (ramen, dumplings, etc.)</button>
-        <button onclick="q4()">🍕 Anything as long as it tastes good</button>
-      `;
+        <p>Pick your <b>comfort cuisine</b>. Choose wisely. Or don’t.</p>
+        <div class="btns">
+          <button onclick="record('🍝 Italian / pasta forever', q4)">🍝 Italian / pasta forever</button>
+          <button onclick="record('🌮 Mexican / street food', q4)">🌮 Mexican or street food</button>
+          <button onclick="record('🍜 Asian food (ramen/dumplings/etc.)', q4)">🍜 Asian food (ramen, dumplings, etc.)</button>
+          <button class="btnAlt" onclick="record('🍕 Anything as long as it tastes good', q4)">🍕 Anything as long as it tastes good</button>
+        </div>
+        <div class="footer">
+          <span class="tiny">This answer will be used against you (joking).</span>
+          <span>3/5</span>
+        </div>
+      `);
     }
 
-    function q4() {
-      document.getElementById("content").innerHTML = `
-        <h1>One more.</h1>
-        <p>If you could book a trip right now:</p>
-
-        <button onclick="q5()">🏖 Somewhere with a beach</button>
-        <button onclick="q5()">🏔 Mountains & quiet views</button>
-        <button onclick="q5()">🏙 Exploring a new city</button>
-        <button onclick="q5()">🧳 Anywhere, just not home</button>
-      `;
+    function q4(){
+      step = 4; setDots(step);
+      transitionTo(`
+        <h1>Travel time.</h1>
+        <p>If you could book a trip <b>right now</b>:</p>
+        <div class="btns">
+          <button class="btnAlt" onclick="record('🏖 Beach trip', q5)">🏖 Somewhere with a beach</button>
+          <button onclick="record('🏔 Mountains & quiet views', q5)">🏔 Mountains & quiet views</button>
+          <button onclick="record('🏙 Exploring a new city', q5)">🏙 Exploring a new city</button>
+          <button onclick="record('🧳 Anywhere, just not home', q5)">🧳 Anywhere, just not home</button>
+        </div>
+        <div class="footer">
+          <span class="tiny">Passport not required for this quiz.</span>
+          <span>4/5</span>
+        </div>
+      `);
     }
 
-    function q5() {
-      document.getElementById("content").innerHTML = `
+    function q5(){
+      step = 5; setDots(step);
+      transitionTo(`
         <h1>Final question.</h1>
-        <p>
-          When someone puts unnecessary effort into<br>
-          something like this, your first thought is:
-        </p>
-
-        <button onclick="final()">Okay, that’s kinda funny</button>
-        <button onclick="final()">Extra, but I respect it</button>
-        <button onclick="final()">I rolled my eyes, then smiled</button>
-        <button onclick="final()">I’m judging… but not mad</button>
-      `;
+        <p>When someone puts <b>unnecessary effort</b> into something like this, your first thought is:</p>
+        <div class="btns">
+          <button onclick="record('😄 “Okay, that’s kinda funny”', showFinal)">Okay, that’s kinda funny</button>
+          <button class="btnAlt" onclick="record('🫡 “Extra, but I respect it”', showFinal)">Extra, but I respect it</button>
+          <button onclick="record('🙄➡️🙂 “I rolled my eyes, then smiled”', showFinal)">I rolled my eyes, then smiled</button>
+          <button onclick="record('😌 “I’m judging… but not mad”', showFinal)">I’m judging… but not mad</button>
+        </div>
+        <div class="footer">
+          <span class="tiny">No wrong answers. Just vibes.</span>
+          <span>5/5</span>
+        </div>
+      `);
     }
 
-    function final() {
-      document.getElementById("content").innerHTML = `
-        <h1>Fair enough.</h1>
-        <p>No trick.<br>No follow-up question.<br>No proposal. Relax.</p>
+    function burstConfetti(){
+      const c = document.getElementById("confetti");
+      c.innerHTML = "";
+      const colors = ["#ff2e79","#7c4dff","#ffd166","#06d6a0","#4cc9f0","#f72585"];
+      for(let i=0;i<28;i++){
+        const el = document.createElement("i");
+        el.style.left = Math.random()*100 + "%";
+        el.style.background = colors[Math.floor(Math.random()*colors.length)];
+        el.style.animationDelay = (Math.random()*0.15) + "s";
+        el.style.transform = `rotate(${Math.random()*60}deg)`;
+        el.style.opacity = (0.75 + Math.random()*0.25).toString();
+        c.appendChild(el);
+      }
+      setTimeout(()=>{ c.innerHTML=""; }, 1700);
+    }
 
-        <p>
-          Just wanted to confirm —<br>
-          you seem like someone who’d be fun to talk to.
-        </p>
+    function showFinal(){
+      step = 5; setDots(step);
+      burstConfetti();
 
-        <p style="font-size:14px; color:#777;">
-          Thanks for participating in this very serious study.
-        </p>
-      `;
+      const list = answers.map(a => `<div class="item">• ${a}</div>`).join("");
+
+      transitionTo(`
+        <h1>Fair enough. 🎉</h1>
+        <p>No trick. No follow-up question. No proposal. Relax.</p>
+        <p><b>Your extremely scientific results:</b></p>
+
+        <div class="results">
+          ${list}
+        </div>
+
+        <p class="sub">Screenshot if you want. Or don’t. I’ll survive.</p>
+
+        <div class="btns">
+          <button class="btnAlt" onclick="restart()">Do it again (for research)</button>
+        </div>
+
+        <div class="footer">
+          <span class="tiny">Status: impressed (quietly)</span>
+          <span>done</span>
+        </div>
+      `);
+    }
+
+    function restart(){
+      step = 0; answers = []; setDots(step);
+      transitionTo(`
+        <h1>Important announcement.</h1>
+        <p>This will take <b>exactly 15 seconds</b> and includes <b>zero life-changing decisions</b>.</p>
+        <p class="sub">Proceed at your own risk. I’m not liable for smiling.</p>
+
+        <div class="btns">
+          <button class="btnAlt" onclick="q1()">I accept responsibility →</button>
+        </div>
+
+        <div class="footer">
+          <span class="tiny">Level: mildly sarcastic</span>
+          <span>v1.0</span>
+        </div>
+      `);
     }
   </script>
 </body>
