@@ -7,23 +7,23 @@
 
   <style>
     :root{
-      --bg1:#ff4d8d;
+      --bg1:#ff3d87;
       --bg2:#ffb3d1;
-      --bg3:#7c4dff;
+      --bg3:#6f4bff;
       --card: rgba(255,255,255,.78);
       --cardBorder: rgba(255,255,255,.35);
       --text:#1d1d1f;
       --muted:#5a5a66;
       --btn:#ff2e79;
-      --btn2:#7c4dff;
-      --shadow: 0 20px 60px rgba(0,0,0,.18);
+      --btn2:#6f4bff;
+      --shadow: 0 22px 70px rgba(0,0,0,.18);
     }
 
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
       color:var(--text);
       overflow:hidden;
       display:flex;
@@ -45,16 +45,16 @@
 
     .blob{
       position:absolute;
-      filter: blur(20px);
+      filter: blur(22px);
       opacity:.45;
       border-radius: 999px;
       z-index:0;
       mix-blend-mode: screen;
       animation: floaty 10s ease-in-out infinite;
     }
-    .b1{ width:260px; height:260px; left:-60px; top:40px; background:#fff; animation-duration: 11s; }
-    .b2{ width:220px; height:220px; right:-80px; top:120px; background:#ffd6e7; animation-duration: 13s; }
-    .b3{ width:280px; height:280px; right:20px; bottom:-120px; background:#cbb6ff; animation-duration: 15s; }
+    .b1{ width:270px; height:270px; left:-70px; top:50px; background:#fff; animation-duration: 11s; }
+    .b2{ width:230px; height:230px; right:-90px; top:130px; background:#ffd6e7; animation-duration: 13s; }
+    .b3{ width:300px; height:300px; right:10px; bottom:-140px; background:#cbb6ff; animation-duration: 15s; }
     @keyframes floaty{
       0%,100%{ transform: translate(0,0) scale(1); }
       50%{ transform: translate(18px,-14px) scale(1.05); }
@@ -63,7 +63,7 @@
     .wrap{
       position:relative;
       width:100%;
-      max-width: 430px;
+      max-width: 440px;
       z-index:1;
     }
 
@@ -76,21 +76,44 @@
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       padding: 22px 18px 16px;
-      transform: translateY(0);
-      animation: popIn .45s ease-out;
       position: relative;
+      animation: popIn .45s ease-out;
     }
     @keyframes popIn{
       from{ opacity:0; transform: translateY(14px) scale(.985); }
       to{ opacity:1; transform: translateY(0) scale(1); }
     }
 
+    .confetti{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+      border-radius: 18px;
+    }
+    .confetti i{
+      position:absolute;
+      width:10px; height:14px;
+      border-radius: 3px;
+      top:-20px;
+      opacity: .95;
+      animation: fall 1.25s ease-in forwards;
+      transform: rotate(10deg);
+    }
+    @keyframes fall{
+      to{
+        top: 110%;
+        transform: translateY(0) rotate(250deg);
+        opacity: 1;
+      }
+    }
+
     .topbar{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      margin-bottom: 10px;
       gap:10px;
+      margin-bottom: 10px;
     }
     .chip{
       display:inline-flex;
@@ -100,7 +123,7 @@
       border-radius: 999px;
       background: rgba(255,255,255,.55);
       border: 1px solid rgba(255,255,255,.35);
-      font-weight: 700;
+      font-weight: 800;
       font-size: 12px;
       color: rgba(20,20,25,.82);
       white-space: nowrap;
@@ -111,7 +134,9 @@
       align-items:center;
     }
     .dots{
-      display:flex; gap:6px; align-items:center;
+      display:flex;
+      gap:6px;
+      align-items:center;
       padding: 8px 10px;
       border-radius: 999px;
       background: rgba(255,255,255,.55);
@@ -128,7 +153,7 @@
       background: rgba(255,255,255,.55);
       border-radius: 999px;
       padding: 8px 10px;
-      font-weight: 800;
+      font-weight: 900;
       font-size: 12px;
       cursor: pointer;
       user-select: none;
@@ -166,7 +191,7 @@
       border-radius: 14px;
       padding: 12px 14px;
       font-size: 15.5px;
-      font-weight: 800;
+      font-weight: 900;
       cursor:pointer;
       transition: transform .08s ease, filter .18s ease, box-shadow .18s ease;
       color: white;
@@ -178,9 +203,9 @@
 
     .btnAlt{
       background: linear-gradient(135deg, var(--btn2), #a78bfa);
-      box-shadow: 0 10px 22px rgba(124, 77, 255, .22);
+      box-shadow: 0 10px 22px rgba(111, 75, 255, .22);
     }
-    .btnAlt:hover{ box-shadow: 0 12px 26px rgba(124, 77, 255, .30); }
+    .btnAlt:hover{ box-shadow: 0 12px 26px rgba(111, 75, 255, .30); }
 
     .footer{
       margin-top: 14px;
@@ -193,33 +218,11 @@
       color: rgba(55,55,65,.65);
       font-size: 12px;
     }
-    .tiny{
-      opacity:.9;
-      font-weight: 700;
-    }
+    .tiny{ opacity:.9; font-weight: 800; }
 
-    .confetti{
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      overflow:hidden;
-      border-radius: 18px;
-    }
-    .confetti i{
-      position:absolute;
-      width:10px; height:14px;
-      border-radius: 3px;
-      top:-20px;
-      opacity: .95;
-      animation: fall 1.25s ease-in forwards;
-      transform: rotate(10deg);
-    }
-    @keyframes fall{
-      to{
-        top: 110%;
-        transform: translateY(0) rotate(250deg);
-        opacity: 1;
-      }
+    .slideOut{ animation: slideOut .16s ease-in forwards; }
+    @keyframes slideOut{
+      to{ opacity:0; transform: translateY(10px) scale(.99); }
     }
 
     .results{
@@ -233,13 +236,23 @@
       font-size: 13.5px;
       line-height: 1.35;
     }
-    .results b{ color: rgba(25,25,35,.95); }
     .results .item{ margin: 6px 0; }
-
-    .slideOut{ animation: slideOut .16s ease-in forwards; }
-    @keyframes slideOut{
-      to{ opacity:0; transform: translateY(10px) scale(.99); }
+    .hintBox{
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.45);
+      border: 1px solid rgba(255,255,255,.30);
+      color: rgba(40,40,55,.78);
+      font-size: 12.5px;
     }
+    .toast{
+      margin-top: 10px;
+      font-size: 12.5px;
+      color: rgba(40,40,55,.78);
+      display:none;
+    }
+    .toast.show{ display:block; }
   </style>
 </head>
 
@@ -253,7 +266,7 @@
       <div class="confetti" id="confetti"></div>
 
       <div class="topbar">
-        <div class="chip">🧪 Very Serious Study</div>
+        <div class="chip">✨ Mini Quiz</div>
 
         <div class="rightTop">
           <div class="dots" id="dots">
@@ -269,23 +282,23 @@
       </div>
 
       <div id="content">
-        <h1>Important announcement.</h1>
-        <p>This will take <b>exactly 15 seconds</b> and includes <b>zero life-changing decisions</b>.</p>
-        <p class="sub">Tip: if sound doesn’t work on iPhone, unmute + tap once.</p>
+        <h1>Quick thing.</h1>
+        <p>This takes <b>15 seconds</b>. No awkward questions. No pressure.</p>
+        <p class="sub">If sound doesn’t work, you’re probably on iPhone + silent mode. Happens.</p>
 
         <div class="btns">
-          <button class="btnAlt" onclick="q1()">I accept responsibility →</button>
+          <button class="btnAlt" onclick="q1()">Start →</button>
         </div>
 
         <div class="footer">
-          <span class="tiny">Level: mildly sarcastic</span>
-          <span>v1.2</span>
+          <span class="tiny">Level: harmlessly extra</span>
+          <span>v2.0</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Minimal sounds (user-controlled). iOS sometimes requires a first-tap "unlock". -->
+  <!-- Minimal sounds (user-controlled). Mobile may require a first-tap unlock. -->
   <audio id="sClick" preload="auto" playsinline>
     <source src="https://assets.mixkit.co/sfx/preview/mixkit-modern-click-box-check-1120.mp3" type="audio/mpeg">
   </audio>
@@ -294,10 +307,11 @@
   </audio>
 
   <script>
+    // ---------- state ----------
     let step = 0;
-    let answers = [];
+    const answers = []; // stored locally in the browser only
 
-    // Sound control (minimal + optional)
+    // ---------- sound ----------
     let soundOn = true;
     let audioUnlocked = false;
 
@@ -307,22 +321,22 @@
       if (t) t.textContent = soundOn ? "🔊 Sound" : "🔇 Muted";
     }
 
-    async function unlockAudioOnce() {
+    async function unlockAudioOnce(){
       if (audioUnlocked) return;
       audioUnlocked = true;
 
-      const ids = ["sClick", "sWin"];
-      for (const id of ids) {
+      const ids = ["sClick","sWin"];
+      for (const id of ids){
         const a = document.getElementById(id);
         if (!a) continue;
-        try {
+        try{
           a.volume = 0.0; // silent unlock
           await a.play();
           a.pause();
           a.currentTime = 0;
           a.volume = 0.35;
-        } catch (e) {
-          audioUnlocked = false; // retry on next tap
+        }catch(e){
+          audioUnlocked = false; // retry next tap
         }
       }
     }
@@ -331,15 +345,12 @@
       if (!soundOn) return;
       const a = document.getElementById(id);
       if (!a) return;
-
       a.currentTime = 0;
       a.volume = 0.35; // minimal
-      a.play().catch(() => {
-        audioUnlocked = false;
-      });
+      a.play().catch(()=>{ audioUnlocked = false; });
     }
 
-    const dotCount = 6; // intro + 5 questions
+    // ---------- UI helpers ----------
     function setDots(n){
       const dots = document.querySelectorAll("#dots .dot");
       dots.forEach((d,i)=> d.classList.toggle("on", i <= n));
@@ -355,107 +366,98 @@
       }, 170);
     }
 
-    function record(label, nextFn){
-      unlockAudioOnce();       // iOS "first tap" unlock
-      play("sClick");          // minimal click
-      answers.push(label);
+    function addAnswer(q, a){
+      answers.push({ q, a });
+    }
+
+    function choose(q, a, nextFn){
+      unlockAudioOnce();
+      play("sClick");
+      addAnswer(q, a);
       nextFn();
     }
 
+    // ---------- questions (5 total) ----------
     function q1(){
       step = 1; setDots(step);
       transitionTo(`
-        <h1>First question.</h1>
-        <p>Please don’t overthink it. <br><span class="sub">(Everyone overthinks it.)</span></p>
+        <h1>Quick question.</h1>
+        <p>You clicked this because:</p>
         <div class="btns">
-          <button onclick="record('🍿 Staying in (movie night)', q2)">🍿 Staying in with a good movie</button>
-          <button onclick="record('🌮 Going out “just to eat”', q2)">🌮 Going out “just to eat”</button>
-          <button onclick="record('🚗 Random drives (no destination)', q2)">🚗 Random drives, no destination</button>
-          <button onclick="record('🛌 Cancel plans (zero regret)', q2)">🛌 Cancelling plans, zero regret</button>
+          <button onclick="choose('You clicked this because…','Curiosity won', q2)">Curiosity won</button>
+          <button onclick="choose('You clicked this because…','I like unnecessary things', q2)">I like unnecessary things</button>
+          <button onclick="choose('You clicked this because…','I had 30 seconds to spare', q2)">I had 30 seconds to spare</button>
+          <button class="btnAlt" onclick="choose('You clicked this because…','I respect the effort', q2)">I respect the effort</button>
         </div>
-        <div class="footer">
-          <span class="tiny">Pick one. No speeches.</span>
-          <span>1/5</span>
-        </div>
+        <div class="footer"><span class="tiny">No wrong answer.</span><span>1/5</span></div>
       `);
     }
 
     function q2(){
       step = 2; setDots(step);
       transitionTo(`
-        <h1>Noted.</h1>
-        <p>Second question: <b>your vibe</b> in one button.</p>
+        <h1>Fair.</h1>
+        <p>Your vibe in new conversations is usually:</p>
         <div class="btns">
-          <button class="btnAlt" onclick="record('😄 Sarcastic but harmless', q3)">😄 Sarcastic but harmless</button>
-          <button onclick="record('🧠 Quietly judging everything', q3)">🧠 Quietly judging everything</button>
-          <button onclick="record('🔥 Slightly chaotic (fun version)', q3)">🔥 Slightly chaotic (fun version)</button>
-          <button onclick="record('😴 I’ll reply later energy', q3)">😴 I’ll reply later energy</button>
+          <button onclick="choose('Your vibe is…','Chill and observant', q3)">Chill and observant</button>
+          <button class="btnAlt" onclick="choose('Your vibe is…','Sarcastic but friendly', q3)">Sarcastic but friendly</button>
+          <button onclick="choose('Your vibe is…','Quiet at first, then fun', q3)">Quiet at first, then fun</button>
+          <button onclick="choose('Your vibe is…','Accidentally funny', q3)">Accidentally funny</button>
         </div>
-        <div class="footer">
-          <span class="tiny">I’m collecting data for science.</span>
-          <span>2/5</span>
-        </div>
+        <div class="footer"><span class="tiny">Noted. Respectfully.</span><span>2/5</span></div>
       `);
     }
 
     function q3(){
       step = 3; setDots(step);
       transitionTo(`
-        <h1>One more.</h1>
-        <p>Pick your <b>comfort cuisine</b>. Choose wisely. Or don’t.</p>
+        <h1>Be honest.</h1>
+        <p>Your reaction to this page right now:</p>
         <div class="btns">
-          <button onclick="record('🍝 Italian / pasta forever', q4)">🍝 Italian / pasta forever</button>
-          <button onclick="record('🌮 Mexican / street food', q4)">🌮 Mexican or street food</button>
-          <button onclick="record('🍜 Asian food (ramen/dumplings/etc.)', q4)">🍜 Asian food (ramen, dumplings, etc.)</button>
-          <button class="btnAlt" onclick="record('🍕 Anything as long as it tastes good', q4)">🍕 Anything as long as it tastes good</button>
+          <button onclick="choose('Your reaction is…','Smiling a little', q4)">Smiling a little</button>
+          <button onclick="choose('Your reaction is…','Curious where this goes', q4)">Curious where this goes</button>
+          <button class="btnAlt" onclick="choose('Your reaction is…','Laughing quietly', q4)">Laughing quietly</button>
+          <button onclick="choose('Your reaction is…','Pretending I’m not impressed', q4)">Pretending I’m not impressed</button>
         </div>
-        <div class="footer">
-          <span class="tiny">This answer will be used against you (joking).</span>
-          <span>3/5</span>
-        </div>
+        <div class="footer"><span class="tiny">I can work with that.</span><span>3/5</span></div>
       `);
     }
 
     function q4(){
       step = 4; setDots(step);
       transitionTo(`
-        <h1>Travel time.</h1>
-        <p>If you could book a trip <b>right now</b>:</p>
+        <h1>Quick vibe check.</h1>
+        <p>If we kept talking, your energy would be:</p>
         <div class="btns">
-          <button class="btnAlt" onclick="record('🏖 Beach trip', q5)">🏖 Somewhere with a beach</button>
-          <button onclick="record('🏔 Mountains & quiet views', q5)">🏔 Mountains & quiet views</button>
-          <button onclick="record('🏙 Exploring a new city', q5)">🏙 Exploring a new city</button>
-          <button onclick="record('🧳 Anywhere, just not home', q5)">🧳 Anywhere, just not home</button>
+          <button onclick="choose('If we kept talking…','Playful + chill', q5)">Playful + chill</button>
+          <button class="btnAlt" onclick="choose('If we kept talking…','Curious but cautious', q5)">Curious but cautious</button>
+          <button onclick="choose('If we kept talking…','Chaos (but the fun kind)', q5)">Chaos (but the fun kind)</button>
+          <button onclick="choose('If we kept talking…','Depends… impress me', q5)">Depends… impress me</button>
         </div>
-        <div class="footer">
-          <span class="tiny">Passport not required for this quiz.</span>
-          <span>4/5</span>
-        </div>
+        <div class="footer"><span class="tiny">Fair standards.</span><span>4/5</span></div>
       `);
     }
 
     function q5(){
       step = 5; setDots(step);
       transitionTo(`
-        <h1>Final question.</h1>
-        <p>When someone puts <b>unnecessary effort</b> into something like this, your first thought is:</p>
+        <h1>Last one.</h1>
+        <p>After this, your honest thought is:</p>
         <div class="btns">
-          <button onclick="record('😄 “Okay, that’s kinda funny”', showFinal)">Okay, that’s kinda funny</button>
-          <button class="btnAlt" onclick="record('🫡 “Extra, but I respect it”', showFinal)">Extra, but I respect it</button>
-          <button onclick="record('🙄➡️🙂 “I rolled my eyes, then smiled”', showFinal)">I rolled my eyes, then smiled</button>
-          <button onclick="record('😌 “I’m judging… but not mad”', showFinal)">I’m judging… but not mad</button>
+          <button onclick="choose('Your honest thought is…','Okay… this could be fun', showFinal)">Okay… this could be fun</button>
+          <button class="btnAlt" onclick="choose('Your honest thought is…','I don’t know yet, but I’m curious', showFinal)">I don’t know yet, but I’m curious</button>
+          <button onclick="choose('Your honest thought is…','Unexpected, but I’d give it a chance', showFinal)">Unexpected, but I’d give it a chance</button>
+          <button onclick="choose('Your honest thought is…','Not mad at this 😄', showFinal)">Not mad at this 😄</button>
         </div>
-        <div class="footer">
-          <span class="tiny">No wrong answers. Just vibes.</span>
-          <span>5/5</span>
-        </div>
+        <div class="footer"><span class="tiny">That’s all. Promise.</span><span>5/5</span></div>
       `);
     }
 
+    // ---------- confetti + results ----------
     function burstConfetti(){
       const c = document.getElementById("confetti");
       c.innerHTML = "";
-      const colors = ["#ff2e79","#7c4dff","#ffd166","#06d6a0","#4cc9f0","#f72585"];
+      const colors = ["#ff2e79","#6f4bff","#ffd166","#06d6a0","#4cc9f0","#f72585"];
       for(let i=0;i<28;i++){
         const el = document.createElement("i");
         el.style.left = Math.random()*100 + "%";
@@ -468,49 +470,92 @@
       setTimeout(()=>{ c.innerHTML=""; }, 1700);
     }
 
+    function formatResultsText(){
+      // Human-readable, easy to paste into chat
+      return answers.map((x, i) => `${i+1}) ${x.a}`).join("\n");
+    }
+
+    async function copyResults(){
+      const text = formatResultsText();
+      try{
+        await navigator.clipboard.writeText(text);
+        showToast("Copied ✅ Now paste it in chat.");
+      }catch(e){
+        // Fallback for older browsers
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        showToast("Copied ✅ Now paste it in chat.");
+      }
+    }
+
+    function showToast(msg){
+      const t = document.getElementById("toast");
+      if (!t) return;
+      t.textContent = msg;
+      t.classList.add("show");
+      setTimeout(()=> t.classList.remove("show"), 2500);
+    }
+
     function showFinal(){
       unlockAudioOnce();
       play("sWin");
       burstConfetti();
 
-      const list = answers.map(a => `<div class="item">• ${a}</div>`).join("");
+      // Pretty list for screen
+      const listHtml = answers.map(x => `<div class="item">• <b>${x.a}</b></div>`).join("");
 
       transitionTo(`
-        <h1>Fair enough. 🎉</h1>
-        <p>No trick. No follow-up question. No proposal. Relax.</p>
-        <p><b>Your extremely scientific results:</b></p>
+        <h1>That’s it.</h1>
+        <p>No trick. No follow-up question.</p>
+
+        <p>
+          Hope this made you pause for a second  
+          and smile — that was the whole point.
+        </p>
 
         <div class="results">
-          ${list}
+          ${listHtml}
         </div>
 
-        <p class="sub">Screenshot if you want. Or don’t. I’ll survive.</p>
+        <div class="hintBox">
+          If you want me to see your answers, tap <b>Copy results</b> and paste them in chat.
+          (Nothing gets sent automatically. Promise.)
+        </div>
 
         <div class="btns">
-          <button class="btnAlt" onclick="restart()">Do it again (for research)</button>
+          <button class="btnAlt" onclick="copyResults()">Copy results</button>
+          <button onclick="restart()">Do it again (for research)</button>
         </div>
 
+        <div id="toast" class="toast"></div>
+
         <div class="footer">
-          <span class="tiny">Status: impressed (quietly)</span>
+          <span class="tiny">Relaxed + fun energy</span>
           <span>done</span>
         </div>
       `);
     }
 
     function restart(){
-      step = 0; answers = []; setDots(step);
+      step = 0;
+      answers.length = 0;
+      setDots(step);
       transitionTo(`
-        <h1>Important announcement.</h1>
-        <p>This will take <b>exactly 15 seconds</b> and includes <b>zero life-changing decisions</b>.</p>
-        <p class="sub">Tip: if sound doesn’t work on iPhone, unmute + tap once.</p>
+        <h1>Quick thing.</h1>
+        <p>This takes <b>15 seconds</b>. No awkward questions. No pressure.</p>
+        <p class="sub">If sound doesn’t work, you’re probably on iPhone + silent mode. Happens.</p>
 
         <div class="btns">
-          <button class="btnAlt" onclick="q1()">I accept responsibility →</button>
+          <button class="btnAlt" onclick="q1()">Start →</button>
         </div>
 
         <div class="footer">
-          <span class="tiny">Level: mildly sarcastic</span>
-          <span>v1.2</span>
+          <span class="tiny">Level: harmlessly extra</span>
+          <span>v2.0</span>
         </div>
       `);
     }
