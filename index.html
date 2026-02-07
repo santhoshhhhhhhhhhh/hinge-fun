@@ -79,6 +79,7 @@
       padding: 22px 18px 16px;
       transform: translateY(0);
       animation: popIn .45s ease-out;
+      position: relative;
     }
     @keyframes popIn{
       from{ opacity:0; transform: translateY(14px) scale(.985); }
@@ -103,6 +104,12 @@
       font-weight: 700;
       font-size: 12px;
       color: rgba(20,20,25,.82);
+      white-space: nowrap;
+    }
+    .rightTop{
+      display:flex;
+      gap:8px;
+      align-items:center;
     }
     .dots{
       display:flex; gap:6px; align-items:center;
@@ -116,6 +123,19 @@
       background: rgba(30,30,40,.25);
     }
     .dot.on{ background: rgba(30,30,40,.85); }
+
+    .soundToggle{
+      border: 1px solid rgba(255,255,255,.35);
+      background: rgba(255,255,255,.55);
+      border-radius: 999px;
+      padding: 8px 10px;
+      font-weight: 800;
+      font-size: 12px;
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .soundToggle:hover{ filter: brightness(1.02); }
 
     h1{
       margin: 6px 0 6px;
@@ -178,12 +198,6 @@
       opacity:.9;
       font-weight: 700;
     }
-    a{
-      color: rgba(35,35,45,.85);
-      text-decoration: none;
-      font-weight: 800;
-    }
-    a:hover{ text-decoration: underline; }
 
     /* confetti */
     .confetti{
@@ -210,7 +224,6 @@
       }
     }
 
-    /* result list */
     .results{
       text-align:left;
       margin-top: 10px;
@@ -225,7 +238,6 @@
     .results b{ color: rgba(25,25,35,.95); }
     .results .item{ margin: 6px 0; }
 
-    /* subtle slide transition */
     .slideOut{ animation: slideOut .16s ease-in forwards; }
     @keyframes slideOut{
       to{ opacity:0; transform: translateY(10px) scale(.99); }
@@ -244,13 +256,17 @@
 
       <div class="topbar">
         <div class="chip">🧪 Very Serious Study</div>
-        <div class="dots" id="dots">
-          <span class="dot on"></span>
-          <span class="dot"></span>
-          <span class="dot"></span>
-          <span class="dot"></span>
-          <span class="dot"></span>
-          <span class="dot"></span>
+
+        <div class="rightTop">
+          <div class="dots" id="dots">
+            <span class="dot on"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+          <div id="soundToggle" class="soundToggle" onclick="toggleSound()">🔊 Sound</div>
         </div>
       </div>
 
@@ -265,15 +281,39 @@
 
         <div class="footer">
           <span class="tiny">Level: mildly sarcastic</span>
-          <span>v1.0</span>
+          <span>v1.1</span>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Minimal sounds (user-controlled) -->
+  <audio id="sClick" preload="auto">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-modern-click-box-check-1120.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="sWin" preload="auto">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3" type="audio/mpeg">
+  </audio>
+
   <script>
     let step = 0;
     let answers = [];
+
+    // Sound control (minimal + optional)
+    let soundOn = true;
+    function toggleSound(){
+      soundOn = !soundOn;
+      const t = document.getElementById("soundToggle");
+      if (t) t.textContent = soundOn ? "🔊 Sound" : "🔇 Muted";
+    }
+    function play(id){
+      if (!soundOn) return;
+      const a = document.getElementById(id);
+      if (!a) return;
+      a.currentTime = 0;
+      a.volume = 0.35; // minimal
+      a.play().catch(()=>{});
+    }
 
     const dotCount = 6; // intro + 5 questions
     function setDots(n){
@@ -292,6 +332,7 @@
     }
 
     function record(label, nextFn){
+      play("sClick");
       answers.push(label);
       nextFn();
     }
@@ -403,7 +444,7 @@
     }
 
     function showFinal(){
-      step = 5; setDots(step);
+      play("sWin");
       burstConfetti();
 
       const list = answers.map(a => `<div class="item">• ${a}</div>`).join("");
@@ -443,7 +484,7 @@
 
         <div class="footer">
           <span class="tiny">Level: mildly sarcastic</span>
-          <span>v1.0</span>
+          <span>v1.1</span>
         </div>
       `);
     }
