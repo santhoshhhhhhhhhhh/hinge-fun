@@ -43,7 +43,6 @@
       100%{ background-position: 0% 50%; }
     }
 
-    /* floating blobs */
     .blob{
       position:absolute;
       filter: blur(20px);
@@ -199,7 +198,6 @@
       font-weight: 700;
     }
 
-    /* confetti */
     .confetti{
       position:absolute;
       inset:0;
@@ -273,7 +271,7 @@
       <div id="content">
         <h1>Important announcement.</h1>
         <p>This will take <b>exactly 15 seconds</b> and includes <b>zero life-changing decisions</b>.</p>
-        <p class="sub">Proceed at your own risk. I’m not liable for smiling.</p>
+        <p class="sub">Tip: if sound doesn’t work on iPhone, unmute + tap once.</p>
 
         <div class="btns">
           <button class="btnAlt" onclick="q1()">I accept responsibility →</button>
@@ -281,17 +279,17 @@
 
         <div class="footer">
           <span class="tiny">Level: mildly sarcastic</span>
-          <span>v1.1</span>
+          <span>v1.2</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Minimal sounds (user-controlled) -->
-  <audio id="sClick" preload="auto">
+  <!-- Minimal sounds (user-controlled). iOS sometimes requires a first-tap "unlock". -->
+  <audio id="sClick" preload="auto" playsinline>
     <source src="https://assets.mixkit.co/sfx/preview/mixkit-modern-click-box-check-1120.mp3" type="audio/mpeg">
   </audio>
-  <audio id="sWin" preload="auto">
+  <audio id="sWin" preload="auto" playsinline>
     <source src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3" type="audio/mpeg">
   </audio>
 
@@ -301,18 +299,44 @@
 
     // Sound control (minimal + optional)
     let soundOn = true;
+    let audioUnlocked = false;
+
     function toggleSound(){
       soundOn = !soundOn;
       const t = document.getElementById("soundToggle");
       if (t) t.textContent = soundOn ? "🔊 Sound" : "🔇 Muted";
     }
+
+    async function unlockAudioOnce() {
+      if (audioUnlocked) return;
+      audioUnlocked = true;
+
+      const ids = ["sClick", "sWin"];
+      for (const id of ids) {
+        const a = document.getElementById(id);
+        if (!a) continue;
+        try {
+          a.volume = 0.0; // silent unlock
+          await a.play();
+          a.pause();
+          a.currentTime = 0;
+          a.volume = 0.35;
+        } catch (e) {
+          audioUnlocked = false; // retry on next tap
+        }
+      }
+    }
+
     function play(id){
       if (!soundOn) return;
       const a = document.getElementById(id);
       if (!a) return;
+
       a.currentTime = 0;
       a.volume = 0.35; // minimal
-      a.play().catch(()=>{});
+      a.play().catch(() => {
+        audioUnlocked = false;
+      });
     }
 
     const dotCount = 6; // intro + 5 questions
@@ -332,7 +356,8 @@
     }
 
     function record(label, nextFn){
-      play("sClick");
+      unlockAudioOnce();       // iOS "first tap" unlock
+      play("sClick");          // minimal click
       answers.push(label);
       nextFn();
     }
@@ -444,6 +469,7 @@
     }
 
     function showFinal(){
+      unlockAudioOnce();
       play("sWin");
       burstConfetti();
 
@@ -476,7 +502,7 @@
       transitionTo(`
         <h1>Important announcement.</h1>
         <p>This will take <b>exactly 15 seconds</b> and includes <b>zero life-changing decisions</b>.</p>
-        <p class="sub">Proceed at your own risk. I’m not liable for smiling.</p>
+        <p class="sub">Tip: if sound doesn’t work on iPhone, unmute + tap once.</p>
 
         <div class="btns">
           <button class="btnAlt" onclick="q1()">I accept responsibility →</button>
@@ -484,7 +510,7 @@
 
         <div class="footer">
           <span class="tiny">Level: mildly sarcastic</span>
-          <span>v1.1</span>
+          <span>v1.2</span>
         </div>
       `);
     }
